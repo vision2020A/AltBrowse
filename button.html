@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>-</title>
+  <style>
+    body { 
+      font-family: system-ui, sans-serif; 
+      display: flex; 
+      justify-content: center; 
+      align-items: center; 
+      height: 100vh; 
+      margin: 0; 
+      background: #000000; /* Changed background color to black */
+    }
+    #hub { 
+      padding: 15px 32px; 
+      font-size: 18px; 
+      font-weight: bold; 
+      background: #00cc66; 
+      color: white; 
+      border: none; 
+      border-radius: 6px; 
+      cursor: pointer; 
+      box-shadow: 0 4px 6px rgba(0,0,0,0.1); 
+    }
+    #hub:hover { background: #00994d; }
+  </style>
+</head>
+<body>
+
+  <button id="hub">Open Latest Version</button>
+
+  <script>
+    document.getElementById("hub").onclick = async () => {
+      try {
+        const hubCode = await fetch(
+          "https://raw.githubusercontent.com/Cra-Z-Gaming/VUS/main/index.html?v=" + Date.now()
+        ).then(r => {
+          if(!r.ok) throw new Error("Network issue");
+          return r.text();
+        });
+        
+        const win = window.open("about:blank", "_blank");
+        if (win) {
+          win.document.open();
+          win.document.write(hubCode);
+          win.document.close();
+        } else {
+          alert("Popup blocked! Please allow popups for this offline file.");
+        }
+      } catch(e) {
+        alert("Failed to fetch updates. Check your internet connection.");
+      }
+    };
+  </script>
+</body>
+</html>
